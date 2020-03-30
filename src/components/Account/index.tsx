@@ -1,3 +1,7 @@
 import React from 'react';
 
-export const Account = () => (<div><h1>Account</h1></div>);
+export const AccountPage = () => (
+  <div>
+    <h1>Account Page</h1>
+  </div>
+);
