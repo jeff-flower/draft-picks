@@ -44,3 +44,15 @@ export class Firebase {
     return this.auth.confirmPasswordReset(code, newPassword);
   }
 }
+
+export const getFirebaseInstance = (): (() => Firebase) => {
+  let firebaseInstance: Firebase;
+
+  return (): Firebase => {
+    if (firebaseInstance) {
+      firebaseInstance = new Firebase();
+    }
+
+    return firebaseInstance;
+  };
+};
