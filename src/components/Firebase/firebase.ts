@@ -1,4 +1,5 @@
 import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -10,8 +11,10 @@ const config = {
   appId: process.env.REACT_APP_APP_ID,
 };
 
+let app: firebase.app.App;
+
 if (!firebase.apps.length) {
-  firebase.initializeApp(config);
+  app = firebase.initializeApp(config);
 }
 
 export const Firebase = {
@@ -19,21 +22,21 @@ export const Firebase = {
     email: string,
     password: string
   ): Promise<firebase.auth.UserCredential> => {
-    return firebase.auth().signInWithEmailAndPassword(email, password);
+    return app.auth().createUserWithEmailAndPassword(email, password);
   },
   doSignInWithEmailAndPassword: (
     email: string,
     password: string
   ): Promise<firebase.auth.UserCredential> => {
-    return firebase.auth().signInWithEmailAndPassword(email, password);
+    return app.auth().signInWithEmailAndPassword(email, password);
   },
   doSignOut: (): Promise<void> => {
-    return firebase.auth().signOut();
+    return app.auth().signOut();
   },
   doPasswordReset: (email: string): Promise<void> => {
-    return firebase.auth().sendPasswordResetEmail(email);
+    return app.auth().sendPasswordResetEmail(email);
   },
   doPasswordUpdate: (code: string, newPassword: string): Promise<void> => {
-    return firebase.auth().confirmPasswordReset(code, newPassword);
+    return app.auth().confirmPasswordReset(code, newPassword);
   },
 };

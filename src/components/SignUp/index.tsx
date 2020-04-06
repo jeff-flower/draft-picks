@@ -19,16 +19,15 @@ const SignUpForm: React.FC<{}> = () => {
   const [error, setError] = React.useState<null | firebase.auth.AuthError>(
     null
   );
-  const firebaseInstance = useFirebaseContext();
+  const { doCreateUserWithEmailAndPassword } = useFirebaseContext();
   const history = useHistory();
 
   const onSubmit = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    if (!isInvalid && firebaseInstance) {
-      firebaseInstance
-        .doCreateUserWithEmailAndPassword(email, password)
+    if (!isInvalid) {
+      doCreateUserWithEmailAndPassword(email, password)
         .then(() => history.push(HOME))
-        .catch((error) => setError);
+        .catch((error: firebase.auth.AuthError) => setError(error));
     }
   };
 
@@ -46,7 +45,7 @@ const SignUpForm: React.FC<{}> = () => {
         />
       </label>
       <label>
-        Username
+        Email
         <input
           name="email"
           value={email}
