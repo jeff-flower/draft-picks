@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as firebase from 'firebase/app';
 
 import { HOME, SIGN_UP } from '../../constants/routes';
+import { useFirebaseContext } from '../Firebase';
 
 export const SignUpPage = () => (
   <div>
@@ -18,10 +19,17 @@ const SignUpForm: React.FC<{}> = () => {
   const [error, setError] = React.useState<null | firebase.auth.AuthError>(
     null
   );
+  const firebaseInstance = useFirebaseContext();
+  const history = useHistory();
 
   const onSubmit = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    console.log('submit:', username, email, password);
+    if (!isInvalid && firebaseInstance) {
+      firebaseInstance
+        .doCreateUserWithEmailAndPassword(email, password)
+        .then(() => history.push(HOME))
+        .catch((error) => setError);
+    }
   };
 
   const isInvalid = password === '' || email === '' || username === '';

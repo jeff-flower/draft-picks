@@ -10,49 +10,30 @@ const config = {
   appId: process.env.REACT_APP_APP_ID,
 };
 
-export class Firebase {
-  private auth: firebase.auth.Auth;
-
-  constructor() {
-    firebase.initializeApp(config);
-    this.auth = firebase.auth();
-  }
-
-  doCreateUserWithEmailAndPassword(
-    email: string,
-    password: string
-  ): Promise<firebase.auth.UserCredential> {
-    return this.auth.signInWithEmailAndPassword(email, password);
-  }
-
-  doSignInWithEmailAndPassword(
-    email: string,
-    password: string
-  ): Promise<firebase.auth.UserCredential> {
-    return this.auth.signInWithEmailAndPassword(email, password);
-  }
-
-  doSignOut(): Promise<void> {
-    return this.auth.signOut();
-  }
-
-  doPasswordReset(email: string): Promise<void> {
-    return this.auth.sendPasswordResetEmail(email);
-  }
-
-  doPasswordUpdate(code: string, newPassword: string): Promise<void> {
-    return this.auth.confirmPasswordReset(code, newPassword);
-  }
+if (!firebase.apps.length) {
+  firebase.initializeApp(config);
 }
 
-export const getFirebaseInstance = (): (() => Firebase) => {
-  let firebaseInstance: Firebase;
-
-  return (): Firebase => {
-    if (firebaseInstance) {
-      firebaseInstance = new Firebase();
-    }
-
-    return firebaseInstance;
-  };
+export const Firebase = {
+  doCreateUserWithEmailAndPassword: (
+    email: string,
+    password: string
+  ): Promise<firebase.auth.UserCredential> => {
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  },
+  doSignInWithEmailAndPassword: (
+    email: string,
+    password: string
+  ): Promise<firebase.auth.UserCredential> => {
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  },
+  doSignOut: (): Promise<void> => {
+    return firebase.auth().signOut();
+  },
+  doPasswordReset: (email: string): Promise<void> => {
+    return firebase.auth().sendPasswordResetEmail(email);
+  },
+  doPasswordUpdate: (code: string, newPassword: string): Promise<void> => {
+    return firebase.auth().confirmPasswordReset(code, newPassword);
+  },
 };
