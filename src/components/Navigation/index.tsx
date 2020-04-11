@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 
 import { SignOutButton } from '../SignOut';
 import * as ROUTES from '../../constants/routes';
+import { useUserSession } from '../UserSession';
 
-export const Navigation: React.FC<{ user: any | null }> = ({ user }) => (
-  <nav>
-    {user ? <AuthorizedUserNavigation /> : <UnauthorizedUserNavigation />}
-  </nav>
-);
+export const Navigation: React.FC<{}> = () => {
+  const user = useUserSession();
+  return (
+    <nav>
+      {user ? <AuthorizedUserNavigation /> : <UnauthorizedUserNavigation />}
+    </nav>
+  );
+};
 
 const AuthorizedUserNavigation: React.FC<{}> = () => (
   <ul>
