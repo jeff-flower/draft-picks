@@ -39,4 +39,6 @@ export const Firebase = {
   doPasswordUpdate: (code: string, newPassword: string): Promise<void> => {
     return app.auth().confirmPasswordReset(code, newPassword);
   },
+  listenToAuthState: (cb: (user: any) => void): firebase.Unsubscribe =>
+    app.auth().onAuthStateChanged(cb),
 };
