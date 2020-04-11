@@ -12,6 +12,7 @@ import { AccountPage } from '../Account';
 import * as ROUTES from '../../constants/routes';
 import { SignInPage } from '../SignIn';
 import { UserSessionProvider } from '../UserSession';
+import { PrivateRoute } from '../PrivateRoute';
 
 export const App = () => {
   return (
@@ -21,16 +22,27 @@ export const App = () => {
           <Navigation />
           <main>
             <Switch>
-              <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-              <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-              <Route
-                path={ROUTES.PASSWORD_FORGET}
-                component={PasswordForgetPage}
-              />
-              <Route path={ROUTES.HOME} component={HomePage} />
-              <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-              <Route path={ROUTES.ADMIN} component={AdminPage} />
-              <Route path={ROUTES.LANDING} component={LandingPage} />
+              <Route path={ROUTES.SIGN_UP}>
+                <SignUpPage />
+              </Route>
+              <Route path={ROUTES.SIGN_IN}>
+                <SignInPage />
+              </Route>
+              <Route path={ROUTES.PASSWORD_FORGET}>
+                <PasswordForgetPage />
+              </Route>
+              <PrivateRoute path={ROUTES.HOME}>
+                <HomePage />
+              </PrivateRoute>
+              <PrivateRoute path={ROUTES.ACCOUNT}>
+                <AccountPage />
+              </PrivateRoute>
+              <PrivateRoute path={ROUTES.ADMIN}>
+                <AdminPage />
+              </PrivateRoute>
+              <Route path={ROUTES.LANDING}>
+                <LandingPage />
+              </Route>
             </Switch>
           </main>
         </>
