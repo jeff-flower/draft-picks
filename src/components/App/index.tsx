@@ -12,6 +12,7 @@ import { AccountPage } from '../Account';
 import * as ROUTES from '../../constants/routes';
 import { UserSessionProvider } from '../UserSession';
 import { PrivateRoute } from '../PrivateRoute';
+import { PicksPage } from '../Picks';
 
 export const App = () => {
   return (
@@ -29,6 +30,9 @@ export const App = () => {
               </Route>
               <PrivateRoute path={ROUTES.HOME}>
                 <HomePage />
+              </PrivateRoute>
+              <PrivateRoute path={ROUTES.PICKS}>
+                <PicksPage />
               </PrivateRoute>
               <PrivateRoute path={ROUTES.ACCOUNT}>
                 <AccountPage />

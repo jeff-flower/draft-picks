@@ -16,6 +16,9 @@ const AuthorizedUserNavigation: React.FC<{}> = () => (
       <Link to={ROUTES.HOME}>Home</Link>
     </li>
     <li>
+      <Link to={ROUTES.PICKS}>Picks</Link>
+    </li>
+    <li>
       <Link to={ROUTES.ACCOUNT}>Account</Link>
     </li>
     <li>
