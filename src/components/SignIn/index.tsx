@@ -2,13 +2,17 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useFirebaseContext } from '../Firebase';
-import { HOME } from '../../constants/routes';
+import { RULES } from '../../constants/routes';
+import { SignUpLink } from '../SignUp';
+import { PasswordForgetLink } from '../PasswordForget';
 
-export const SignIn: React.FC<{}> = () => {
+export const SignInPage: React.FC<{}> = () => {
   return (
     <div>
       <h1>Sign In</h1>
       <SignInForm />
+      <PasswordForgetLink />
+      <SignUpLink />
     </div>
   );
 };
@@ -27,7 +31,7 @@ export const SignInForm: React.FC<{}> = () => {
       .then(() => {
         setEmail('');
         setPassword('');
-        history.push(HOME);
+        history.push(RULES);
       })
       .catch((error: any) => {
         setError(error);

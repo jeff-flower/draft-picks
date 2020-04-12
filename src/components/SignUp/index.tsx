@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import * as firebase from 'firebase/app';
 
-import { HOME, SIGN_UP } from '../../constants/routes';
+import { RULES, SIGN_UP } from '../../constants/routes';
 import { useFirebaseContext } from '../Firebase';
 
 export const SignUpPage = () => (
@@ -26,7 +26,7 @@ const SignUpForm: React.FC<{}> = () => {
     e.preventDefault();
     if (!isInvalid) {
       doCreateUserWithEmailAndPassword(email, password)
-        .then(() => history.push(HOME))
+        .then(() => history.push(RULES))
         .catch((error: firebase.auth.AuthError) => setError(error));
     }
   };

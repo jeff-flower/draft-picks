@@ -6,13 +6,14 @@ import { Navigation } from '../Navigation';
 import { LandingPage } from '../Landing';
 import { SignUpPage } from '../SignUp';
 import { PasswordForgetPage } from '../PasswordForget';
-import { HomePage } from '../Home';
+import { RulesPage } from '../Rules';
 import { AccountPage } from '../Account';
 
 import * as ROUTES from '../../constants/routes';
 import { UserSessionProvider } from '../UserSession';
 import { PrivateRoute } from '../PrivateRoute';
 import { PicksPage } from '../Picks';
+import { SignInPage } from '../SignIn';
 
 export const App = () => {
   return (
@@ -25,12 +26,15 @@ export const App = () => {
               <Route path={ROUTES.SIGN_UP}>
                 <SignUpPage />
               </Route>
+              <Route path={ROUTES.SIGN_IN}>
+                <SignInPage />
+              </Route>
               <Route path={ROUTES.PASSWORD_FORGET}>
                 <PasswordForgetPage />
               </Route>
-              <PrivateRoute path={ROUTES.HOME}>
-                <HomePage />
-              </PrivateRoute>
+              <Route path={ROUTES.RULES}>
+                <RulesPage />
+              </Route>
               <PrivateRoute path={ROUTES.PICKS}>
                 <PicksPage />
               </PrivateRoute>

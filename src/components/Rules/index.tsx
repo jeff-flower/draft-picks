@@ -3,11 +3,10 @@ import React from 'react';
 import { useFirebaseContext } from '../Firebase';
 import { PicksData } from '../Firebase/firebase';
 
-export const HomePage = () => {
+export const RulesPage = () => {
   return (
     <div>
-      <h1>Home Page</h1>
-      <PicksPage />
+      <h1>Rules Page</h1>
     </div>
   );
 };

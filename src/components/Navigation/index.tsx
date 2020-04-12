@@ -7,13 +7,20 @@ import { useUserSession } from '../UserSession';
 
 export const Navigation: React.FC<{}> = () => {
   const user = useUserSession();
-  return <nav>{user ? <AuthorizedUserNavigation /> : null}</nav>;
+  return (
+    <nav>
+      {user ? <AuthorizedUserNavigation /> : <UnauthorizedUserNavigation />}
+    </nav>
+  );
 };
 
 const AuthorizedUserNavigation: React.FC<{}> = () => (
   <ul>
     <li>
-      <Link to={ROUTES.HOME}>Home</Link>
+      <Link to={ROUTES.LANDING}>Home</Link>
+    </li>
+    <li>
+      <Link to={ROUTES.RULES}>Rules</Link>
     </li>
     <li>
       <Link to={ROUTES.PICKS}>Picks</Link>
@@ -30,7 +37,13 @@ const AuthorizedUserNavigation: React.FC<{}> = () => (
 const UnauthorizedUserNavigation: React.FC<{}> = () => (
   <ul>
     <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
+      <Link to={ROUTES.LANDING}>Home</Link>
+    </li>
+    <li>
+      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+    </li>
+    <li>
+      <Link to={ROUTES.RULES}>Rules</Link>
     </li>
   </ul>
 );
