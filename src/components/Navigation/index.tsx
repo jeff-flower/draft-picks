@@ -7,18 +7,11 @@ import { useUserSession } from '../UserSession';
 
 export const Navigation: React.FC<{}> = () => {
   const user = useUserSession();
-  return (
-    <nav>
-      {user ? <AuthorizedUserNavigation /> : <UnauthorizedUserNavigation />}
-    </nav>
-  );
+  return <nav>{user ? <AuthorizedUserNavigation /> : null}</nav>;
 };
 
 const AuthorizedUserNavigation: React.FC<{}> = () => (
   <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
     <li>
       <Link to={ROUTES.HOME}>Home</Link>
     </li>
@@ -33,9 +26,6 @@ const AuthorizedUserNavigation: React.FC<{}> = () => (
 
 const UnauthorizedUserNavigation: React.FC<{}> = () => (
   <ul>
-    <li>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
     <li>
       <Link to={ROUTES.LANDING}>Landing</Link>
     </li>

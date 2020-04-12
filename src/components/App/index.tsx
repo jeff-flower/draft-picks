@@ -10,7 +10,6 @@ import { HomePage } from '../Home';
 import { AccountPage } from '../Account';
 
 import * as ROUTES from '../../constants/routes';
-import { SignInPage } from '../SignIn';
 import { UserSessionProvider } from '../UserSession';
 import { PrivateRoute } from '../PrivateRoute';
 
@@ -24,9 +23,6 @@ export const App = () => {
             <Switch>
               <Route path={ROUTES.SIGN_UP}>
                 <SignUpPage />
-              </Route>
-              <Route path={ROUTES.SIGN_IN}>
-                <SignInPage />
               </Route>
               <Route path={ROUTES.PASSWORD_FORGET}>
                 <PasswordForgetPage />

@@ -1,23 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { SignUpLink } from '../SignUp';
-import { PasswordForgetLink } from '../PasswordForget';
 import { useFirebaseContext } from '../Firebase';
 import { HOME } from '../../constants/routes';
 
-export const SignInPage: React.FC<{}> = () => {
+export const SignIn: React.FC<{}> = () => {
   return (
     <div>
       <h1>Sign In</h1>
       <SignInForm />
-      <PasswordForgetLink />
-      <SignUpLink />
     </div>
   );
 };
 
-const SignInForm: React.FC<{}> = () => {
+export const SignInForm: React.FC<{}> = () => {
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
   const [error, setError] = React.useState<any>();
