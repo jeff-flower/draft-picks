@@ -1,5 +1,15 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
+
+import { buildPicksTemplate } from './util';
+
+export type PicksData = {
+  playerNames: string[];
+  picks: any;
+  hasError: boolean;
+  error: any;
+};
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -41,4 +51,38 @@ export const Firebase = {
   },
   listenToAuthState: (cb: (user: any) => void): firebase.Unsubscribe =>
     app.auth().onAuthStateChanged(cb),
+  getPicksDataForUser: async (): Promise<PicksData> => {
+    try {
+      const playersDoc = await app.firestore().doc('2020/players').get();
+      const userPicksDoc = await app
+        .firestore()
+        .doc(`2020/dev/picks/${app.auth().currentUser?.uid}`)
+        .get();
+
+      return {
+        playerNames: playersDoc.exists ? playersDoc.data()!.players : [],
+        picks: userPicksDoc.exists
+          ? userPicksDoc.data()!.picks
+          : buildPicksTemplate(),
+        hasError: !playersDoc.exists,
+        error: !playersDoc.exists ? 'Missing players information' : '',
+      };
+    } catch (e) {
+      return { playerNames: [], picks: [], hasError: true, error: e };
+    }
+  },
 };
+
+/*
+Add user to users in firestore document
+How to initialize picks?
+get picks: return {players: playerNames, picks: [{pickNumber, team, player picked}]}
+save picks: (playerNames[]) => save player names for user
+
+Check for duplicates?
+*/
+
+/*
+ players: array of player names in format "Name, Position, School"
+ picks: array of {pickNumber: number, team: string, player: string}
+ */
