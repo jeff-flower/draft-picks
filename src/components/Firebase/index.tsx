@@ -1,4 +1,5 @@
 import React from 'react';
+import { PicksData } from './firebase';
 
 import { Firebase } from './firebase';
 

@@ -2,7 +2,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
-import { buildPicksTemplate } from './util';
+import { buildPicksTemplate, UserPick } from './util';
 
 export type PicksData = {
   playerNames: string[];
@@ -69,6 +69,19 @@ export const Firebase = {
       };
     } catch (e) {
       return { playerNames: [], picks: [], hasError: true, error: e };
+    }
+  },
+  saveUserPicks: async (
+    picks: UserPick[]
+  ): Promise<{ hasError: boolean; error?: any }> => {
+    try {
+      await app
+        .firestore()
+        .doc(`2020/dev/picks/${app.auth().currentUser!.uid}`)
+        .set({ picks });
+      return { hasError: false };
+    } catch (e) {
+      return { hasError: true, error: e };
     }
   },
 };
