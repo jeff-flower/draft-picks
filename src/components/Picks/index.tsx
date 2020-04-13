@@ -25,7 +25,9 @@ export const PicksPage: React.FC<{}> = () => {
       }
 
       if (picksData.picks) {
-        setPicks(picksData.picks);
+        const sorted = [...picksData.picks];
+        sorted.sort((a, b) => (a.pickNumber < b.pickNumber ? -1 : 1));
+        setPicks(sorted);
       }
 
       setLoading(false);
