@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import { useFirebaseContext } from '../Firebase';
 import { PicksData } from '../Firebase/firebase';
@@ -9,6 +10,7 @@ export const PicksPage: React.FC<{}> = () => {
   const [players, setPlayers] = React.useState<string[]>([]);
   const [picks, setPicks] = React.useState<UserPick[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [saving, setSaving] = React.useState<boolean>(false);
   const firebaseApi = useFirebaseContext();
 
   React.useEffect(() => {
@@ -47,9 +49,11 @@ export const PicksPage: React.FC<{}> = () => {
     });
   };
 
-  const savePicks = async () => {
-    // TODO: show success/error message, loading indicator, disable button
+  const savePicks = async (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
+    setSaving(true);
     const result = await firebaseApi.saveUserPicks(picks);
+    setSaving(false);
     if (result.hasError) {
       console.log(result.error);
     } else {
@@ -62,7 +66,10 @@ export const PicksPage: React.FC<{}> = () => {
       <h1>Your Picks</h1>
       {loading && <p>loading picks data...</p>}
       {!loading && picks && (
-        <Form>
+        <Form onSubmit={savePicks}>
+          <Button variant="primary" type="submit" disabled={saving}>
+            Save Picks
+          </Button>
           <PicksDropdowns
             picks={picks}
             players={players}
@@ -73,16 +80,6 @@ export const PicksPage: React.FC<{}> = () => {
     </div>
   );
 };
-
-/*
-handle selection
-button should be disabled on submit
-showing loading indicator while fetching picks data
-<form>
-<picks>
-<submit button>
-</form>
-*/
 
 const PicksDropdowns: React.FC<{
   picks: UserPick[];
