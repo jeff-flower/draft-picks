@@ -53,13 +53,15 @@ export const PicksPage: React.FC<{}> = () => {
 
   const savePicks = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    setSaving(true);
-    const result = await firebaseApi.saveUserPicks(picks);
-    setSaving(false);
-    if (result.hasError) {
-      console.log(result.error);
-    } else {
-      console.log('success');
+    if (!saving) {
+      setSaving(true);
+      const result = await firebaseApi.saveUserPicks(picks);
+      setSaving(false);
+      if (result.hasError) {
+        console.log(result.error);
+      } else {
+        console.log('success');
+      }
     }
   };
 
@@ -70,7 +72,7 @@ export const PicksPage: React.FC<{}> = () => {
       {!loading && picks && (
         <Form onSubmit={savePicks}>
           <Button variant="primary" type="submit" disabled={saving}>
-            Save Picks
+            {!saving ? 'Save Picks' : 'Saving...'}
           </Button>
           <PicksDropdowns
             picks={picks}
