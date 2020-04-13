@@ -6,7 +6,7 @@ import { buildPicksTemplate, UserPick } from './util';
 
 export type PicksData = {
   playerNames: string[];
-  picks: any;
+  picks: UserPick[];
   hasError: boolean;
   error: any;
 };
