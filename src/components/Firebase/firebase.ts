@@ -56,7 +56,11 @@ export const Firebase = {
       const playersDoc = await app.firestore().doc('2020/players').get();
       const userPicksDoc = await app
         .firestore()
-        .doc(`2020/dev/picks/${app.auth().currentUser?.uid}`)
+        .doc(
+          `2020/${process.env.REACT_APP_DB_TABLE}/picks/${
+            app.auth().currentUser?.uid
+          }`
+        )
         .get();
 
       return {
@@ -77,7 +81,11 @@ export const Firebase = {
     try {
       await app
         .firestore()
-        .doc(`2020/dev/picks/${app.auth().currentUser!.uid}`)
+        .doc(
+          `2020/${process.env.REACT_APP_DB_TABLE}/picks/${
+            app.auth().currentUser!.uid
+          }`
+        )
         .set({ picks });
       return { hasError: false };
     } catch (e) {
