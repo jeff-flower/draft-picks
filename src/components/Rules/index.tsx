@@ -9,12 +9,12 @@ export const RulesPage = () => {
         <p>
           For every selection you make that gets picked in the first round you
           will receive 2 points plus an amount based off a tiered structure.
-          <ol>
-            <li>Picks 1-10 will receive 5 additional points</li>
-            <li>Picks 11-20 will receive 10 additional points</li>
-            <li>Picks 21-31 will receive 15 additional points</li>
-          </ol>
         </p>
+        <ol>
+          <li>Picks 1-10 will receive 5 additional points</li>
+          <li>Picks 11-20 will receive 10 additional points</li>
+          <li>Picks 21-31 will receive 15 additional points</li>
+        </ol>
       </section>
       <section>
         <h2>Trades</h2>

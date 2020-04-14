@@ -85,17 +85,3 @@ export const Firebase = {
     }
   },
 };
-
-/*
-Add user to users in firestore document
-How to initialize picks?
-get picks: return {players: playerNames, picks: [{pickNumber, team, player picked}]}
-save picks: (playerNames[]) => save player names for user
-
-Check for duplicates?
-*/
-
-/*
- players: array of player names in format "Name, Position, School"
- picks: array of {pickNumber: number, team: string, player: string}
- */
