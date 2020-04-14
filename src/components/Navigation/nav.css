@@ -1,0 +1,13 @@
+.navheader ul {
+  list-style: none;
+  padding: 10px 10px 0 40px;
+}
+
+.navheader ul li {
+  display: inline-block;
+  margin-right: 30px;
+}
+
+.navheader ul li.signout {
+  float: right;
+}

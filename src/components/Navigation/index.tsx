@@ -5,33 +5,37 @@ import { SignOutButton } from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 import { useUserSession } from '../UserSession';
 
+import './nav.css';
+
 export const Navigation: React.FC<{}> = () => {
   const user = useUserSession();
   return (
-    <nav>
+    <nav className="navheader">
       {user ? <AuthorizedUserNavigation /> : <UnauthorizedUserNavigation />}
     </nav>
   );
 };
 
 const AuthorizedUserNavigation: React.FC<{}> = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Home</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.RULES}>Rules</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.PICKS}>Picks</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
-    </li>
-    <li>
-      <SignOutButton />
-    </li>
-  </ul>
+  <>
+    <ul>
+      <li>
+        <Link to={ROUTES.LANDING}>Home</Link>
+      </li>
+      <li>
+        <Link to={ROUTES.RULES}>Rules</Link>
+      </li>
+      <li>
+        <Link to={ROUTES.PICKS}>Picks</Link>
+      </li>
+      <li>
+        <Link to={ROUTES.ACCOUNT}>Account</Link>
+      </li>
+      <li className="signout">
+        <SignOutButton />
+      </li>
+    </ul>
+  </>
 );
 
 const UnauthorizedUserNavigation: React.FC<{}> = () => (

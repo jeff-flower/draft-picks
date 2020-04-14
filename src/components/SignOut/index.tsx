@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 import { useFirebaseContext } from '../Firebase';
 import { LANDING } from '../../constants/routes';
@@ -14,8 +15,8 @@ export const SignOutButton: React.FC<{}> = () => {
   };
 
   return (
-    <button type="button" onClick={handleClick}>
+    <Button onClick={handleClick} variant="outline-dark" size="sm">
       Sign Out
-    </button>
+    </Button>
   );
 };
