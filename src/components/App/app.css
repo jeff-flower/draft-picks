@@ -1,0 +1,11 @@
+@media (min-width: 720px) {
+  .main {
+    margin: 2% 5% 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .main {
+    margin: 2% 10% 0;
+  }
+}

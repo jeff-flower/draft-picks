@@ -15,13 +15,15 @@ import { PrivateRoute } from '../PrivateRoute';
 import { PicksPage } from '../Picks';
 import { SignInPage } from '../SignIn';
 
+import './app.css';
+
 export const App = () => {
   return (
     <Router>
       <UserSessionProvider>
         <>
           <Navigation />
-          <main>
+          <main className="main">
             <Switch>
               <Route path={ROUTES.SIGN_UP}>
                 <SignUpPage />

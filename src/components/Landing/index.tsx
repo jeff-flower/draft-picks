@@ -8,17 +8,17 @@ export const LandingPage = () => {
   const user = useUserSession();
 
   return (
-    <div>
-      <h1>Welcome!</h1>
+    <section>
+      <h1>Welcome back!</h1>
       {user ? <SignedInLanding /> : <NotSignedInLanding />}
-    </div>
+    </section>
   );
 };
 
 const SignedInLanding = () => (
   <>
     <p>
-      Welcome back! Need a reminder how this works? Check out the <RulesLink />
+      Need a reminder how this works? Check out the <RulesLink />
     </p>
     <p>
       Think rules are for sissies? Start making your <PicksLink />!
