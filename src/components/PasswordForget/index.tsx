@@ -1,14 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import { PASSWORD_FORGET } from '../../constants/routes';
 import { useFirebaseContext } from '../Firebase';
 
+import './passwordforget.css';
+
 export const PasswordForgetPage = () => (
-  <div>
-    <h1>Password Forget Page</h1>
+  <section className="passwordforget">
+    <h1>Reset your password</h1>
     <PasswordForgetForm />
-  </div>
+  </section>
 );
 
 const PasswordForgetForm: React.FC<{}> = () => {
@@ -32,20 +36,20 @@ const PasswordForgetForm: React.FC<{}> = () => {
   const isInvalid = email === '';
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Email
-        <input
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="email">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e: any) => setEmail(e.target.value)}
         />
-      </label>
-      <button disabled={isInvalid} type="submit">
+      </Form.Group>
+      <Button disabled={isInvalid} type="submit">
         Reset my password
-      </button>
-      {error && <p>{error.message}</p>}
-    </form>
+      </Button>
+      {error && <p style={{ color: 'red' }}>{error.message}</p>}
+    </Form>
   );
 };
 
