@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import * as firebase from 'firebase/app';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import { RULES, SIGN_UP } from '../../constants/routes';
 import { useFirebaseContext } from '../Firebase';
+
+import './signup.css';
 
 export const SignUpPage = () => (
   <div>
@@ -34,39 +38,39 @@ const SignUpForm: React.FC<{}> = () => {
   const isInvalid = password === '' || email === '' || username === '';
 
   return (
-    <form onSubmit={onSubmit}>
-      <label>
-        Username
-        <input
+    <Form onSubmit={onSubmit} className="signup">
+      <Form.Group controlId="username">
+        <Form.Label>Username</Form.Label>
+        <Form.Control
+          type="text"
           name="username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          type="text"
+          onChange={(e: any) => setUsername(e.target.value)}
         />
-      </label>
-      <label>
-        Email
-        <input
+      </Form.Group>
+      <Form.Group controlId="email">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
           name="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e: any) => setEmail(e.target.value)}
           type="email"
         />
-      </label>
-      <label>
-        Password
-        <input
+      </Form.Group>
+      <Form.Group controlId="password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
           name="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
+          onChange={(e: any) => setPassword(e.target.value)}
         />
-      </label>
-      <button disabled={isInvalid} type="submit">
+      </Form.Group>
+      <Button variant="primary" disabled={isInvalid} type="submit">
         Sign Up
-      </button>
-      {error && <p>{error.message}</p>}
-    </form>
+      </Button>
+      {error && <p style={{ color: 'red' }}>{error.message}</p>}
+    </Form>
   );
 };
 
