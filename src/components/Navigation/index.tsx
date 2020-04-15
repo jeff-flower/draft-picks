@@ -28,9 +28,6 @@ const AuthorizedUserNavigation: React.FC<{}> = () => (
       <li>
         <Link to={ROUTES.PICKS}>Picks</Link>
       </li>
-      <li>
-        <Link to={ROUTES.ACCOUNT}>Account</Link>
-      </li>
       <li className="signout">
         <SignOutButton />
       </li>

@@ -7,7 +7,6 @@ import { LandingPage } from '../Landing';
 import { SignUpPage } from '../SignUp';
 import { PasswordForgetPage } from '../PasswordForget';
 import { RulesPage } from '../Rules';
-import { AccountPage } from '../Account';
 
 import * as ROUTES from '../../constants/routes';
 import { UserSessionProvider } from '../UserSession';
@@ -39,9 +38,6 @@ export const App = () => {
               </Route>
               <PrivateRoute path={ROUTES.PICKS}>
                 <PicksPage />
-              </PrivateRoute>
-              <PrivateRoute path={ROUTES.ACCOUNT}>
-                <AccountPage />
               </PrivateRoute>
               <PrivateRoute path={ROUTES.ADMIN}>
                 <AdminPage />
