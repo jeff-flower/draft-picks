@@ -1,19 +1,23 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import { useFirebaseContext } from '../Firebase';
 import { LANDING } from '../../constants/routes';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 
+import './signin.css';
+
 export const SignInPage: React.FC<{}> = () => {
   return (
-    <div>
+    <section className="signin">
       <h1>Sign In</h1>
       <SignInForm />
       <PasswordForgetLink />
       <SignUpLink />
-    </div>
+    </section>
   );
 };
 
@@ -41,31 +45,31 @@ export const SignInForm: React.FC<{}> = () => {
   const isInvalid = email === '' || password === '';
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Email
-        <input
+    <Form onSubmit={handleSubmit} className="signin--form">
+      <Form.Group controlId="email">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          type="email"
           value={email}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setEmail(e.target.value)
           }
-          type="email"
         />
-      </label>
-      <label>
-        Password
-        <input
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
           value={password}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setPassword(e.target.value)
           }
-          type="password"
         />
-      </label>
-      <button type="submit" disabled={isInvalid}>
+      </Form.Group>
+      <Button variant="primary" type="submit" disabled={isInvalid}>
         Sign In
-      </button>
-      {error && <p>{error.message}</p>}
-    </form>
+      </Button>
+      {error && <p style={{ color: 'red' }}>{error.message}</p>}
+    </Form>
   );
 };
