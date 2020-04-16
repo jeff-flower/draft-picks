@@ -73,9 +73,6 @@ export const PicksPage: React.FC<{}> = () => {
       {loading && <p>loading picks data...</p>}
       {!loading && picks && (
         <Form onSubmit={savePicks}>
-          <Button variant="primary" type="submit" disabled={saving}>
-            {!saving ? 'Save Picks' : 'Saving...'}
-          </Button>
           <div className="picksContainer">
             <div>
               <PicksDropdowns
@@ -92,6 +89,9 @@ export const PicksPage: React.FC<{}> = () => {
               />
             </div>
           </div>
+          <Button variant="primary" type="submit" disabled={saving}>
+            {!saving ? 'Save Picks' : 'Saving...'}
+          </Button>
         </Form>
       )}
     </div>
