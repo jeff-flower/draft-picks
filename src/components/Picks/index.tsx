@@ -1,12 +1,20 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 import { useFirebaseContext } from '../Firebase';
 import { PicksData } from '../Firebase/firebase';
 import { UserPick } from '../Firebase/util';
 
 import './picks.css';
+
+const hasDuplicates = (picks: UserPick[]): boolean => {
+  const picksWithoutEmpties = picks.filter((pick) => pick.pick !== '');
+  const pickNames = picksWithoutEmpties.map((pick) => pick.pick);
+  const uniquePicks = new Set(pickNames);
+  return uniquePicks.size < pickNames.length;
+};
 
 export const PicksPage: React.FC<{}> = () => {
   const [players, setPlayers] = React.useState<string[]>([]);
@@ -73,6 +81,9 @@ export const PicksPage: React.FC<{}> = () => {
       {loading && <p>loading picks data...</p>}
       {!loading && picks && (
         <Form onSubmit={savePicks}>
+          {hasDuplicates(picks) && (
+            <Alert variant="danger">Watch out! You have duplicate picks.</Alert>
+          )}
           <div className="picksContainer">
             <div>
               <PicksDropdowns
@@ -89,6 +100,9 @@ export const PicksPage: React.FC<{}> = () => {
               />
             </div>
           </div>
+          {hasDuplicates(picks) && (
+            <Alert variant="danger">Watch out! You have duplicate picks.</Alert>
+          )}
           <Button variant="primary" type="submit" disabled={saving}>
             {!saving ? 'Save Picks' : 'Saving...'}
           </Button>
