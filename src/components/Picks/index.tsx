@@ -6,6 +6,8 @@ import { useFirebaseContext } from '../Firebase';
 import { PicksData } from '../Firebase/firebase';
 import { UserPick } from '../Firebase/util';
 
+import './picks.css';
+
 export const PicksPage: React.FC<{}> = () => {
   const [players, setPlayers] = React.useState<string[]>([]);
   const [picks, setPicks] = React.useState<UserPick[]>([]);
@@ -74,11 +76,22 @@ export const PicksPage: React.FC<{}> = () => {
           <Button variant="primary" type="submit" disabled={saving}>
             {!saving ? 'Save Picks' : 'Saving...'}
           </Button>
-          <PicksDropdowns
-            picks={picks}
-            players={players}
-            onPlayerPicked={handlePickSelection}
-          />
+          <div className="picksContainer">
+            <div>
+              <PicksDropdowns
+                picks={picks.slice(0, 16)}
+                players={players}
+                onPlayerPicked={handlePickSelection}
+              />
+            </div>
+            <div>
+              <PicksDropdowns
+                picks={picks.slice(16)}
+                players={players}
+                onPlayerPicked={handlePickSelection}
+              />
+            </div>
+          </div>
         </Form>
       )}
     </div>
