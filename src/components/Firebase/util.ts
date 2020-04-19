@@ -1,3 +1,5 @@
+import { User } from 'firebase';
+
 export type UserPick = { pickNumber: number; team: string; pick: string };
 
 const teamOrder = [
@@ -55,3 +57,26 @@ export const buildUserTrade = (): UserTrade => ({
   pickNumber: '',
   for: '',
 });
+
+export type ActualPick = { pickNumber: number; player: string };
+
+export const scorePick = (
+  userPick: UserPick,
+  actualPick: ActualPick
+): number => {
+  let bonus = 0;
+
+  if (actualPick.pickNumber === userPick.pickNumber) {
+    bonus = actualPick.pickNumber;
+  }
+
+  if (actualPick.pickNumber < 11) {
+    return 7 + bonus;
+  }
+
+  if (actualPick.pickNumber < 21) {
+    return 12 + bonus;
+  }
+
+  return 17 + bonus;
+};
