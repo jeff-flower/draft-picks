@@ -118,8 +118,14 @@ const TradeForm: React.FC<{
   ));
   return (
     <Form>
-      <div className="trade__group">
-        <h2>{`Trade ${tradeNumber + 1}`}</h2>
+      <div className="trade-group">
+        <Form.Row>
+          <div className="trade-group__header">
+            <h2>{`Trade ${tradeNumber + 1}`}</h2>
+            <Button variant="outline-danger">Delete</Button>
+          </div>
+        </Form.Row>
+
         <Form.Row>
           <Form.Group as={Col} xs={3} controlId="{`pickNumber-$tradeNumber`}">
             <Form.Label>PickNumber</Form.Label>
@@ -133,7 +139,7 @@ const TradeForm: React.FC<{
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Group as={Col} sm={4} controlId="{`fromTeam-$tradeNumber`}">
+          <Form.Group as={Col} sm={3} controlId="{`fromTeam-$tradeNumber`}">
             <Form.Label>From</Form.Label>
             <Form.Control
               as="select"
@@ -145,7 +151,7 @@ const TradeForm: React.FC<{
               {teamOptions}
             </Form.Control>
           </Form.Group>
-          <Form.Group as={Col} sm={4} controlId="{`toTeam-$tradeNumber`}">
+          <Form.Group as={Col} sm={3} controlId="{`toTeam-$tradeNumber`}">
             <Form.Label>To</Form.Label>
             <Form.Control
               as="select"
@@ -159,7 +165,7 @@ const TradeForm: React.FC<{
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Group as={Col} controlId="{`for-$tradeNumber`}">
+          <Form.Group as={Col} md={6} controlId="{`for-$tradeNumber`}">
             <Form.Label>For</Form.Label>
             <Form.Control
               as="textarea"
