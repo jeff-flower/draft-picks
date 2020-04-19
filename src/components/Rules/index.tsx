@@ -15,6 +15,10 @@ export const RulesPage = () => {
           <li>Picks 11-20 will receive 10 additional points</li>
           <li>Picks 21-31 will receive 15 additional points</li>
         </ol>
+        <p>
+          Additionally, if you get the pick exactly right (pick number and
+          player) you get a bonus equal to the pick number.
+        </p>
       </section>
       <section>
         <h2>Trades</h2>
