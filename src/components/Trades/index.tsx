@@ -66,6 +66,19 @@ export const TradesPage: React.FC<{}> = () => {
     );
   };
 
+  const handleSaveTrades = async () => {
+    if (!saving) {
+      setSaving(true);
+      const result = await firebaseApi.saveTradesDataForUser(trades);
+      setSaving(false);
+      if (result.hasError) {
+        console.log('error saving trades', result.error);
+      } else {
+        console.log('success saving trades');
+      }
+    }
+  };
+
   return (
     <Container fluid>
       <Row>
@@ -101,7 +114,21 @@ export const TradesPage: React.FC<{}> = () => {
               </Button>
             </Col>
             <Col xs={8} sm={{ span: 3, offset: 6 }}>
-              <Button>Save Trades</Button>
+              <Button onClick={handleSaveTrades} disabled={saving}>
+                {!saving && <span>Save Trades</span>}
+                {saving && (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">Loading...</span>
+                  </>
+                )}
+              </Button>
             </Col>
           </Row>
         </>
