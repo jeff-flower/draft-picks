@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/functions';
 
 import { buildPicksTemplate, UserPick, UserTrade } from './util';
 
@@ -138,6 +139,22 @@ export const Firebase = {
           }`
         )
         .set({ trades });
+      return { hasError: false };
+    } catch (e) {
+      return { hasError: true, error: e };
+    }
+  },
+  saveActualPick: async (): Promise<any> => {
+    const pick = {
+      pickNumber: '1',
+      player: 'Chase Young, EDGE, Ohio State',
+    };
+
+    try {
+      await app
+        .firestore()
+        .doc(`2020/${process.env.REACT_APP_DB_TABLE}/results/picks`)
+        .update({ picks: firebase.firestore.FieldValue.arrayUnion(pick) });
       return { hasError: false };
     } catch (e) {
       return { hasError: true, error: e };

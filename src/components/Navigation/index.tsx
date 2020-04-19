@@ -34,6 +34,9 @@ const AuthorizedUserNavigation: React.FC<{}> = () => (
     <Dropdown.Item>
       <Link to={ROUTES.TRADES}>Trades</Link>
     </Dropdown.Item>
+    {/* <Dropdown.Item>
+      <Link to={ROUTES.ADMIN}>Admin</Link>
+    </Dropdown.Item> */}
     <Dropdown.Divider />
     <Dropdown.Item>
       <SignOutButton />
