@@ -1,8 +1,9 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import { useFirebaseContext } from '../Firebase';
-import { ScoredPick } from '../Firebase/firebase';
+import { ActualPick } from '../Firebase/util';
 
 export const AdminPage = () => {
   const [players, setPlayers] = React.useState<string[]>([]);
@@ -23,16 +24,22 @@ export const AdminPage = () => {
     loadPlayers();
   }, [firebaseApi]);
 
-  const handleClick = async () => {
-    const;
-    const result = await firebaseApi.saveActualPick();
-    console.log(result);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (pickNumber && playerName) {
+      const actualPick: ActualPick = {
+        pickNumber,
+        player: playerName,
+      };
+      const result = await firebaseApi.saveActualPick(actualPick);
+      console.log(result);
+    }
   };
 
   return (
     <div>
       <h1>Admin</h1>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="pickNumber">
           <Form.Label>Pick Number</Form.Label>
           <Form.Control
@@ -55,8 +62,8 @@ export const AdminPage = () => {
             ))}
           </Form.Control>
         </Form.Group>
+        <Button type="submit">Add Actual Pick</Button>
       </Form>
-      <button onClick={handleClick}>Add Actual Pick</button>
     </div>
   );
 };

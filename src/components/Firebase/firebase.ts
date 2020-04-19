@@ -3,7 +3,13 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/functions';
 
-import { buildPicksTemplate, UserPick, UserTrade } from './util';
+import {
+  buildPicksTemplate,
+  UserPick,
+  UserTrade,
+  scorePick,
+  ActualPick,
+} from './util';
 
 export type PicksData = {
   playerNames: string[];
@@ -17,6 +23,13 @@ export type TradesData = {
   trades: UserTrade[];
   hasError: boolean;
   error: any;
+};
+
+export type ScoredPick = {
+  userId: string;
+  pickNumber: number;
+  player: string;
+  score: number;
 };
 
 const config = {
@@ -144,20 +157,63 @@ export const Firebase = {
       return { hasError: true, error: e };
     }
   },
-  saveActualPick: async (): Promise<any> => {
-    const pick = {
-      pickNumber: '1',
-      player: 'Chase Young, EDGE, Ohio State',
-    };
-
+  saveActualPick: async (actualPick: ActualPick): Promise<any> => {
     try {
       await app
         .firestore()
         .doc(`2020/${process.env.REACT_APP_DB_TABLE}/results/picks`)
-        .update({ picks: firebase.firestore.FieldValue.arrayUnion(pick) });
+        .update({
+          picks: firebase.firestore.FieldValue.arrayUnion(actualPick),
+        });
+
+      const picksSnapshot = await app
+        .firestore()
+        .collection(`2020/${process.env.REACT_APP_DB_TABLE}/picks`)
+        .get();
+
+      const newScores: ScoredPick[] = [];
+
+      picksSnapshot.forEach((picksDocument) => {
+        const picks = picksDocument.data().picks;
+        if (picks) {
+          const match = picks.find(
+            (userPick: UserPick) => userPick.pick === actualPick.player
+          );
+          if (match) {
+            const scoredPick: ScoredPick = {
+              userId: picksDocument.id,
+              pickNumber: actualPick.pickNumber,
+              player: actualPick.player,
+              score: scorePick(match, actualPick),
+            };
+
+            newScores.push(scoredPick);
+          }
+        }
+      });
+
+      await app
+        .firestore()
+        .doc(`2020/${process.env.REACT_APP_DB_TABLE}/results/scores`)
+        .update({
+          scores: firebase.firestore.FieldValue.arrayUnion(...newScores),
+        });
+
       return { hasError: false };
     } catch (e) {
       return { hasError: true, error: e };
     }
+  },
+  getPlayerList: async (): Promise<string[]> => {
+    const playersDoc = await app.firestore().doc(`2020/players`).get();
+
+    if (playersDoc.exists) {
+      const playersData = playersDoc.data();
+      if (playersData && playersData.players) {
+        return playersData.players;
+      }
+    }
+
+    return [];
   },
 };
