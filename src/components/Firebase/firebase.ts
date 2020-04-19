@@ -32,6 +32,17 @@ export type ScoredPick = {
   score: number;
 };
 
+export type PicksSummary = {
+  username: string;
+  // array of player names in order from pick 1 to 32
+  orderedPicks: string[];
+};
+
+export type TradesSummary = {
+  username: string;
+  trades: UserTrade[];
+};
+
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -215,5 +226,63 @@ export const Firebase = {
     }
 
     return [];
+  },
+  getAllPicks: async (): Promise<PicksSummary[]> => {
+    const userDocs = await app.firestore().collection('users').get();
+    const usernameMap = new Map();
+    userDocs.forEach((doc) => {
+      usernameMap.set(doc.id, doc.data()!.username);
+    });
+
+    const picksSummary: PicksSummary[] = [];
+    const picksDocs = await app
+      .firestore()
+      .collection(`2020/${process.env.REACT_APP_DB_TABLE}/picks`)
+      .get();
+    picksDocs.forEach((picksDoc) => {
+      const username = usernameMap.get(picksDoc.id);
+      if (picksDoc.data() && picksDoc.data().picks) {
+        const sortedPicks = picksDoc
+          .data()
+          .picks.sort((pick1: any, pick2: any) => {
+            if (pick1.pickNumber < pick2.pickNumber) {
+              return -1;
+            }
+
+            if (pick2.pickNumber < pick1.pickNumber) {
+              return 1;
+            }
+
+            return 0;
+          });
+        const playerNames = sortedPicks.map(
+          (sortedPick: any) => sortedPick.pick
+        );
+        picksSummary.push({ username, orderedPicks: playerNames });
+      }
+    });
+
+    return picksSummary;
+  },
+  getAllTrades: async (): Promise<TradesSummary[]> => {
+    const userDocs = await app.firestore().collection('users').get();
+    const usernameMap = new Map();
+    userDocs.forEach((doc) => {
+      usernameMap.set(doc.id, doc.data()!.username);
+    });
+
+    const tradesSummary: TradesSummary[] = [];
+    const tradesDocs = await app
+      .firestore()
+      .collection(`2020/${process.env.REACT_APP_DB_TABLE}/trades`)
+      .get();
+    tradesDocs.forEach((tradesDoc) => {
+      const username = usernameMap.get(tradesDoc.id);
+      if (tradesDoc.data() && tradesDoc.data().trades) {
+        tradesSummary.push({ username, trades: tradesDoc.data().trades });
+      }
+    });
+
+    return tradesSummary;
   },
 };
