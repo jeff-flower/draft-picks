@@ -94,13 +94,12 @@ export const TradesPage: React.FC<{}> = () => {
       {!loading && trades && (
         <>
           {trades.map((trade, index) => (
-            <Row>
+            <Row key={index}>
               <Col>
                 <TradeForm
                   trade={trade}
                   tradeNumber={index}
                   teams={teams}
-                  key={index}
                   handleDelete={handleDeleteTrade}
                   handleChange={handleTradeChange}
                 />
