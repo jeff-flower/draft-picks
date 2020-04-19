@@ -22,17 +22,17 @@ export const Navigation: React.FC<{}> = () => {
 
 const AuthorizedUserNavigation: React.FC<{}> = () => (
   <>
-    <Dropdown.Item>
-      <Link to={ROUTES.LANDING}>Home</Link>
+    <Dropdown.Item as={Link} to={ROUTES.LANDING}>
+      Home
     </Dropdown.Item>
-    <Dropdown.Item>
-      <Link to={ROUTES.RULES}>Rules</Link>
+    <Dropdown.Item as={Link} to={ROUTES.RULES}>
+      Rules
     </Dropdown.Item>
-    <Dropdown.Item>
-      <Link to={ROUTES.PICKS}>Picks</Link>
+    <Dropdown.Item as={Link} to={ROUTES.PICKS}>
+      Picks
     </Dropdown.Item>
-    <Dropdown.Item>
-      <Link to={ROUTES.TRADES}>Trades</Link>
+    <Dropdown.Item as={Link} to={ROUTES.TRADES}>
+      Trades
     </Dropdown.Item>
     {/* <Dropdown.Item>
       <Link to={ROUTES.ADMIN}>Admin</Link>
@@ -46,14 +46,14 @@ const AuthorizedUserNavigation: React.FC<{}> = () => (
 
 const UnauthorizedUserNavigation: React.FC<{}> = () => (
   <>
-    <Dropdown.Item>
-      <Link to={ROUTES.LANDING}>Home</Link>
+    <Dropdown.Item as={Link} to={ROUTES.LANDING}>
+      Home
     </Dropdown.Item>
-    <Dropdown.Item>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+    <Dropdown.Item as={Link} to={ROUTES.SIGN_IN}>
+      Sign In
     </Dropdown.Item>
-    <Dropdown.Item>
-      <Link to={ROUTES.RULES}>Rules</Link>
+    <Dropdown.Item as={Link} to={ROUTES.RULES}>
+      Rules
     </Dropdown.Item>
   </>
 );
