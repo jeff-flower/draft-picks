@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import Spinner from 'react-bootstrap/Spinner';
 
 import { UserTrade, buildUserTrade } from '../Firebase/util';
 import { TradesData } from '../Firebase/firebase';
@@ -66,7 +67,11 @@ export const TradesPage: React.FC<{}> = () => {
           <h1>Your Trades</h1>
         </Col>
       </Row>
-      {loading && <p>loading trades...</p>}
+      {loading && (
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      )}
       {!loading && trades && (
         <>
           {trades.map((trade, index) => (
@@ -83,8 +88,13 @@ export const TradesPage: React.FC<{}> = () => {
             </Row>
           ))}
           <Row>
-            <Col>
-              <Button onClick={addTrade}>Add Trade</Button>
+            <Col xs={4} sm={3}>
+              <Button variant="outline-secondary" onClick={addTrade}>
+                +
+              </Button>
+            </Col>
+            <Col xs={8} sm={{ span: 3, offset: 6 }}>
+              <Button>Save Trades</Button>
             </Col>
           </Row>
         </>
