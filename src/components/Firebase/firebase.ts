@@ -99,9 +99,9 @@ export const Firebase = {
       return { hasError: true, error: e };
     }
   },
-  getTradeDataForUser: async (): Promise<TradesData> => {
+  getTradesDataForUser: async (): Promise<TradesData> => {
     try {
-      const teamsDoc = await app.firestore().doc('2020/teams').get();
+      const teamsDoc = await app.firestore().doc('teams/names').get();
       const userTradesDoc = await app
         .firestore()
         .doc(
@@ -112,7 +112,7 @@ export const Firebase = {
         .get();
 
       return {
-        teams: teamsDoc.exists ? teamsDoc.data()!.names : [],
+        teams: teamsDoc.exists ? Object.values(teamsDoc.data()!) : [],
         trades: userTradesDoc.exists ? userTradesDoc.data()!.trades : [],
         hasError: !teamsDoc.exists,
         error: !teamsDoc.exists ? 'Missing teams data' : '',
@@ -126,7 +126,7 @@ export const Firebase = {
       };
     }
   },
-  saveTradeDataForUser: async (
+  saveTradesDataForUser: async (
     trades: UserTrade[]
   ): Promise<{ hasError: boolean; error?: any }> => {
     try {
