@@ -2,6 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
 
 import { useFirebaseContext } from '../Firebase';
 import { PicksData } from '../Firebase/firebase';
@@ -81,9 +82,12 @@ export const PicksPage: React.FC<{}> = () => {
       {loading && <p>loading picks data...</p>}
       {!loading && picks && (
         <Form onSubmit={savePicks}>
-          {hasDuplicates(picks) && (
-            <Alert variant="danger">Watch out! You have duplicate picks.</Alert>
-          )}
+          <Alert
+            className={hasDuplicates(picks) ? '' : 'hide-duplicates'}
+            variant="danger"
+          >
+            Watch out! You have duplicate picks.
+          </Alert>
           <div className="picksContainer">
             <div>
               <PicksDropdowns
@@ -104,7 +108,19 @@ export const PicksPage: React.FC<{}> = () => {
             <Alert variant="danger">Watch out! You have duplicate picks.</Alert>
           )}
           <Button variant="primary" type="submit" disabled={saving}>
-            {!saving ? 'Save Picks' : 'Saving...'}
+            {!saving && <span>Save Picks</span>}
+            {saving && (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                <span className="sr-only">Loading...</span>
+              </>
+            )}
           </Button>
         </Form>
       )}
