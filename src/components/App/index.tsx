@@ -13,6 +13,7 @@ import { UserSessionProvider } from '../UserSession';
 import { PrivateRoute } from '../PrivateRoute';
 import { PicksPage } from '../Picks';
 import { SignInPage } from '../SignIn';
+import { TradesPage } from '../Trades';
 
 import './app.css';
 
@@ -38,6 +39,9 @@ export const App = () => {
               </Route>
               <PrivateRoute path={ROUTES.PICKS}>
                 <PicksPage />
+              </PrivateRoute>
+              <PrivateRoute path={ROUTES.TRADES}>
+                <TradesPage />
               </PrivateRoute>
               <PrivateRoute path={ROUTES.ADMIN}>
                 <AdminPage />
