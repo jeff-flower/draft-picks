@@ -60,6 +60,12 @@ export const TradesPage: React.FC<{}> = () => {
     });
   };
 
+  const handleDeleteTrade = (tradeNumber: number) => {
+    setTrades((oldTrades) =>
+      oldTrades.filter((trade, index) => index !== tradeNumber)
+    );
+  };
+
   return (
     <Container fluid>
       <Row>
@@ -82,6 +88,7 @@ export const TradesPage: React.FC<{}> = () => {
                   tradeNumber={index}
                   teams={teams}
                   key={index}
+                  handleDelete={handleDeleteTrade}
                   handleChange={handleTradeChange}
                 />
               </Col>
@@ -107,8 +114,13 @@ const TradeForm: React.FC<{
   trade: UserTrade;
   tradeNumber: number;
   teams: string[];
-  handleChange: (value: string, type: keyof UserTrade, index: number) => void;
-}> = ({ trade, tradeNumber, teams, handleChange }) => {
+  handleDelete: (tradeNumber: number) => void;
+  handleChange: (
+    value: string,
+    type: keyof UserTrade,
+    tradeNumber: number
+  ) => void;
+}> = ({ trade, tradeNumber, teams, handleChange, handleDelete }) => {
   const { pickNumber, from, to } = trade;
 
   const teamOptions = teams.map((team, index) => (
@@ -122,7 +134,12 @@ const TradeForm: React.FC<{
         <Form.Row>
           <div className="trade-group__header">
             <h2>{`Trade ${tradeNumber + 1}`}</h2>
-            <Button variant="outline-danger">Delete</Button>
+            <Button
+              variant="outline-danger"
+              onClick={() => handleDelete(tradeNumber)}
+            >
+              Delete
+            </Button>
           </div>
         </Form.Row>
 
