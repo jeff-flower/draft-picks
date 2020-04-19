@@ -41,3 +41,17 @@ export const buildPicksTemplate = (): UserPick[] =>
     team,
     pick: '',
   }));
+
+export type UserTrade = {
+  from: string;
+  to: string;
+  pickNumber: string;
+  for: string;
+};
+
+export const buildUserTrade = (): UserTrade => ({
+  from: '',
+  to: '',
+  pickNumber: '',
+  for: '',
+});

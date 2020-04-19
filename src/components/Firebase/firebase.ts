@@ -2,11 +2,18 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
-import { buildPicksTemplate, UserPick } from './util';
+import { buildPicksTemplate, UserPick, UserTrade } from './util';
 
 export type PicksData = {
   playerNames: string[];
   picks: UserPick[];
+  hasError: boolean;
+  error: any;
+};
+
+export type TradesData = {
+  teams: string[];
+  trades: UserTrade[];
   hasError: boolean;
   error: any;
 };
@@ -87,6 +94,50 @@ export const Firebase = {
           }`
         )
         .set({ picks });
+      return { hasError: false };
+    } catch (e) {
+      return { hasError: true, error: e };
+    }
+  },
+  getTradeDataForUser: async (): Promise<TradesData> => {
+    try {
+      const teamsDoc = await app.firestore().doc('2020/teams').get();
+      const userTradesDoc = await app
+        .firestore()
+        .doc(
+          `2020/${process.env.REACT_APP_DB_TABLE}/trades/${
+            app.auth().currentUser?.uid
+          }`
+        )
+        .get();
+
+      return {
+        teams: teamsDoc.exists ? teamsDoc.data()!.names : [],
+        trades: userTradesDoc.exists ? userTradesDoc.data()!.trades : [],
+        hasError: !teamsDoc.exists,
+        error: !teamsDoc.exists ? 'Missing teams data' : '',
+      };
+    } catch (e) {
+      return {
+        teams: [],
+        trades: [],
+        hasError: true,
+        error: e,
+      };
+    }
+  },
+  saveTradeDataForUser: async (
+    trades: UserTrade[]
+  ): Promise<{ hasError: boolean; error?: any }> => {
+    try {
+      await app
+        .firestore()
+        .doc(
+          `2020/${process.env.REACT_APP_DB_TABLE}/trades/${
+            app.auth().currentUser!.uid
+          }`
+        )
+        .set({ trades });
       return { hasError: false };
     } catch (e) {
       return { hasError: true, error: e };
