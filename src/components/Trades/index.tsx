@@ -1,10 +1,15 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 
 import { UserTrade, buildUserTrade } from '../Firebase/util';
 import { TradesData } from '../Firebase/firebase';
 import { useFirebaseContext } from '../Firebase';
+
+import './trades.css';
 
 export const TradesPage: React.FC<{}> = () => {
   const [teams, setTeams] = React.useState<string[]>([]);
@@ -55,24 +60,36 @@ export const TradesPage: React.FC<{}> = () => {
   };
 
   return (
-    <div>
-      <h1>Your Trades</h1>
+    <Container fluid>
+      <Row>
+        <Col>
+          <h1>Your Trades</h1>
+        </Col>
+      </Row>
       {loading && <p>loading trades...</p>}
       {!loading && trades && (
         <>
-          <Button onClick={addTrade}>Add Trade</Button>
           {trades.map((trade, index) => (
-            <TradeForm
-              trade={trade}
-              tradeNumber={index}
-              teams={teams}
-              key={index}
-              handleChange={handleTradeChange}
-            />
+            <Row>
+              <Col>
+                <TradeForm
+                  trade={trade}
+                  tradeNumber={index}
+                  teams={teams}
+                  key={index}
+                  handleChange={handleTradeChange}
+                />
+              </Col>
+            </Row>
           ))}
+          <Row>
+            <Col>
+              <Button onClick={addTrade}>Add Trade</Button>
+            </Col>
+          </Row>
         </>
       )}
-    </div>
+    </Container>
   );
 };
 
@@ -91,48 +108,59 @@ const TradeForm: React.FC<{
   ));
   return (
     <Form>
-      <Form.Group controlId="{`pickNumber-${tradeNumber}`}">
-        <Form.Label>PickNumber</Form.Label>
-        <Form.Control
-          type="text"
-          value={pickNumber}
-          onChange={(e: any) =>
-            handleChange(e.target.value, 'pickNumber', tradeNumber)
-          }
-        />
-      </Form.Group>
-      <Form.Group controlId="{`fromTeam-${tradeNumber}`}">
-        <Form.Label>From</Form.Label>
-        <Form.Control
-          as="select"
-          value={from}
-          onChange={(e: any) =>
-            handleChange(e.target.value, 'from', tradeNumber)
-          }
-        >
-          {teamOptions}
-        </Form.Control>
-      </Form.Group>
-      <Form.Group controlId="{`toTeam-${tradeNumber}`}">
-        <Form.Label>To</Form.Label>
-        <Form.Control
-          as="select"
-          value={to}
-          onChange={(e: any) => handleChange(e.target.value, 'to', tradeNumber)}
-        >
-          {teamOptions}
-        </Form.Control>
-      </Form.Group>
-      <Form.Group controlId="{`for-${tradeNumber}`}">
-        <Form.Label>For</Form.Label>
-        <Form.Control
-          as="textarea"
-          value={trade.for}
-          onChange={(e: any) =>
-            handleChange(e.target.value, 'for', tradeNumber)
-          }
-        />
-      </Form.Group>
+      <div className="trade__group">
+        <h2>{`Trade ${tradeNumber + 1}`}</h2>
+        <Form.Row>
+          <Form.Group as={Col} xs={3} controlId="{`pickNumber-$tradeNumber`}">
+            <Form.Label>PickNumber</Form.Label>
+            <Form.Control
+              type="text"
+              value={pickNumber}
+              onChange={(e: any) =>
+                handleChange(e.target.value, 'pickNumber', tradeNumber)
+              }
+            />
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} sm={4} controlId="{`fromTeam-$tradeNumber`}">
+            <Form.Label>From</Form.Label>
+            <Form.Control
+              as="select"
+              value={from}
+              onChange={(e: any) =>
+                handleChange(e.target.value, 'from', tradeNumber)
+              }
+            >
+              {teamOptions}
+            </Form.Control>
+          </Form.Group>
+          <Form.Group as={Col} sm={4} controlId="{`toTeam-$tradeNumber`}">
+            <Form.Label>To</Form.Label>
+            <Form.Control
+              as="select"
+              value={to}
+              onChange={(e: any) =>
+                handleChange(e.target.value, 'to', tradeNumber)
+              }
+            >
+              {teamOptions}
+            </Form.Control>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} controlId="{`for-$tradeNumber`}">
+            <Form.Label>For</Form.Label>
+            <Form.Control
+              as="textarea"
+              value={trade.for}
+              onChange={(e: any) =>
+                handleChange(e.target.value, 'for', tradeNumber)
+              }
+            />
+          </Form.Group>
+        </Form.Row>
+      </div>
     </Form>
   );
 };
