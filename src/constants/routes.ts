@@ -8,3 +8,5 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const PICKS = '/picks';
 export const RESULTS = '/results';
 export const TRADES = '/trades';
+export const ALL_PICKS = '/allpicks';
+export const ALL_TRADES = '/alltrades';

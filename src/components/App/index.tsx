@@ -14,6 +14,8 @@ import { PrivateRoute } from '../PrivateRoute';
 import { PicksPage } from '../Picks';
 import { SignInPage } from '../SignIn';
 import { TradesPage } from '../Trades';
+import { AllPicksPage } from '../AllPicks';
+import { AllTradesPage } from '../AllTrades';
 
 import './app.css';
 
@@ -42,6 +44,12 @@ export const App = () => {
               </PrivateRoute>
               <PrivateRoute path={ROUTES.TRADES}>
                 <TradesPage />
+              </PrivateRoute>
+              <PrivateRoute path={ROUTES.ALL_PICKS}>
+                <AllPicksPage />
+              </PrivateRoute>
+              <PrivateRoute path={ROUTES.ALL_TRADES}>
+                <AllTradesPage />
               </PrivateRoute>
               <PrivateRoute path={ROUTES.ADMIN}>
                 <AdminPage />
