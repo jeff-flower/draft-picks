@@ -228,11 +228,13 @@ export const Firebase = {
     return [];
   },
   getAllPicks: async (): Promise<PicksSummary[]> => {
-    const userDocs = await app.firestore().collection('users').get();
-    const usernameMap = new Map();
-    userDocs.forEach((doc) => {
-      usernameMap.set(doc.id, doc.data()!.username);
-    });
+    const userMap = await (
+      await app.firestore().doc('users/users').get()
+    ).data()!;
+    const usernameMap = new Map<string, string>();
+    for (let [key, value] of Object.entries(userMap)) {
+      usernameMap.set(key, value.username);
+    }
 
     const picksSummary: PicksSummary[] = [];
     const picksDocs = await app
@@ -240,7 +242,7 @@ export const Firebase = {
       .collection(`2020/${process.env.REACT_APP_DB_TABLE}/picks`)
       .get();
     picksDocs.forEach((picksDoc) => {
-      const username = usernameMap.get(picksDoc.id);
+      const username = usernameMap.get(picksDoc.ref.id) || '';
       if (picksDoc.data() && picksDoc.data().picks) {
         const sortedPicks = picksDoc
           .data()
