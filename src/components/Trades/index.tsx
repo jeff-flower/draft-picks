@@ -91,7 +91,8 @@ export const TradesPage: React.FC<{}> = () => {
           <span className="sr-only">Loading...</span>
         </Spinner>
       )}
-      {!loading && trades && (
+      {!loading && trades && <TradesList trades={trades} />}
+      {/* {!loading && trades && (
         <>
           {trades.map((trade, index) => (
             <Row key={index}>
@@ -131,7 +132,7 @@ export const TradesPage: React.FC<{}> = () => {
             </Col>
           </Row>
         </>
-      )}
+      )} */}
     </Container>
   );
 };
@@ -221,5 +222,17 @@ const TradeForm: React.FC<{
         </Form.Row>
       </div>
     </Form>
+  );
+};
+
+const TradesList: React.FC<{ trades: UserTrade[] }> = ({ trades }) => {
+  return (
+    <ol>
+      {trades.map((userTrade, index) => (
+        <li key={index}>
+          {`Pick Number ${userTrade.pickNumber} From ${userTrade.from} To ${userTrade.to} For ${userTrade.for}`}
+        </li>
+      ))}
+    </ol>
   );
 };
