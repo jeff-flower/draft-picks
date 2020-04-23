@@ -80,7 +80,8 @@ export const PicksPage: React.FC<{}> = () => {
     <div>
       <h1>Your Picks</h1>
       {loading && <p>loading picks data...</p>}
-      {!loading && picks && (
+      {!loading && picks && <PicksList picks={picks} />}
+      {/* {!loading && picks && (
         <Form onSubmit={savePicks}>
           <Alert
             className={hasDuplicates(picks) ? '' : 'hide-duplicates'}
@@ -123,7 +124,7 @@ export const PicksPage: React.FC<{}> = () => {
             )}
           </Button>
         </Form>
-      )}
+      )} */}
     </div>
   );
 };
@@ -156,4 +157,14 @@ const PicksDropdowns: React.FC<{
   ));
 
   return <>{dropdowns}</>;
+};
+
+const PicksList: React.FC<{ picks: UserPick[] }> = ({ picks }) => {
+  return (
+    <ol>
+      {picks.map((userPick) => (
+        <li key={userPick.pickNumber}>{userPick.pick}</li>
+      ))}
+    </ol>
+  );
 };
