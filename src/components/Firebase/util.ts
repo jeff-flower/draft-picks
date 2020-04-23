@@ -1,3 +1,5 @@
+import { ScoredPick } from './firebase';
+
 export type UserPick = { pickNumber: number; team: string; pick: string };
 
 const teamOrder = [
@@ -77,4 +79,30 @@ export const scorePick = (
   }
 
   return 17 + bonus;
+};
+
+export const getUserScores = (
+  scoredPicks: ScoredPick[],
+  userId: string
+): number[] => {
+  const picksMap: Map<number, number> = new Map();
+
+  scoredPicks.forEach((scoredPick) => {
+    if (scoredPick.userId === userId) {
+      picksMap.set(scoredPick.pickNumber, scoredPick.score);
+    }
+  });
+
+  const allScores = Array.from(new Array(32), (x, i) => i + 1).map(
+    (pickNumber) => {
+      console.log(pickNumber);
+      if (picksMap.has(pickNumber)) {
+        return picksMap.get(pickNumber);
+      }
+
+      return 0;
+    }
+  );
+
+  return allScores as number[];
 };

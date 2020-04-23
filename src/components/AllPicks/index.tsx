@@ -48,13 +48,23 @@ export const AllPicksPage: React.FC<{}> = () => {
 const PicksRow: React.FC<{ picksSummary: PicksSummary }> = ({
   picksSummary,
 }) => {
-  const { username, orderedPicks } = picksSummary;
+  const { username, orderedPicks, scores } = picksSummary;
   return (
-    <tr>
-      <td>{username}</td>
-      {orderedPicks.map((playerName, index) => (
-        <td key={`${username}-pick${index}`}>{playerName}</td>
-      ))}
-    </tr>
+    <>
+      <tr>
+        <td>{username}</td>
+        {orderedPicks.map((playerName, index) => (
+          <td key={`${username}-pick${index}`}>{playerName}</td>
+        ))}
+      </tr>
+      {scores && (
+        <tr>
+          <td></td>
+          {scores.map((score, index) => (
+            <td key={`${username}-score${index}`}>{score}</td>
+          ))}
+        </tr>
+      )}
+    </>
   );
 };

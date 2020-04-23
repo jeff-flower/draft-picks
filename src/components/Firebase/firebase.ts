@@ -9,6 +9,7 @@ import {
   UserTrade,
   scorePick,
   ActualPick,
+  getUserScores,
 } from './util';
 
 export type PicksData = {
@@ -36,6 +37,7 @@ export type PicksSummary = {
   username: string;
   // array of player names in order from pick 1 to 32
   orderedPicks: string[];
+  scores?: number[];
 };
 
 export type TradesSummary = {
@@ -237,6 +239,24 @@ export const Firebase = {
     }
 
     const picksSummary: PicksSummary[] = [];
+    const actualPicksDoc = await app
+      .firestore()
+      .doc(`2020/${process.env.REACT_APP_DB_TABLE}/results/picks`)
+      .get();
+    const actualPicks = actualPicksDoc
+      .data()!
+      .picks.map((actualPick: any) => actualPick.player);
+    picksSummary.push({ username: 'Actual Picks', orderedPicks: actualPicks });
+
+    const scoresDoc = await app
+      .firestore()
+      .doc(`2020/${process.env.REACT_APP_DB_TABLE}/results/scores`)
+      .get();
+
+    let scoresArray: ScoredPick[] = scoresDoc.exists
+      ? scoresDoc.data()!.scores
+      : [];
+
     const picksDocs = await app
       .firestore()
       .collection(`2020/${process.env.REACT_APP_DB_TABLE}/picks`)
@@ -260,7 +280,11 @@ export const Firebase = {
         const playerNames = sortedPicks.map(
           (sortedPick: any) => sortedPick.pick
         );
-        picksSummary.push({ username, orderedPicks: playerNames });
+        picksSummary.push({
+          username,
+          orderedPicks: playerNames,
+          scores: getUserScores(scoresArray, picksDoc.ref.id),
+        });
       }
     });
 
