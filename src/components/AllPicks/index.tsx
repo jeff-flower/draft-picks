@@ -22,7 +22,7 @@ export const AllPicksPage: React.FC<{}> = () => {
       <h1>All Picks</h1>
       {!allPicks.length && <p>loading all picks...</p>}
       {!!allPicks.length && (
-        <Table striped bordered variant="dark" responsive>
+        <Table striped bordered responsive>
           <thead>
             <tr>
               <th>Player</th>
@@ -49,6 +49,7 @@ const PicksRow: React.FC<{ picksSummary: PicksSummary }> = ({
   picksSummary,
 }) => {
   const { username, orderedPicks, scores } = picksSummary;
+
   return (
     <>
       <tr>
@@ -59,7 +60,10 @@ const PicksRow: React.FC<{ picksSummary: PicksSummary }> = ({
       </tr>
       {scores && (
         <tr>
-          <td></td>
+          <td style={{ color: 'green' }}>{`${scores.reduce(
+            (a, b) => a + b,
+            0
+          )}`}</td>
           {scores.map((score, index) => (
             <td key={`${username}-score${index}`}>{score}</td>
           ))}
