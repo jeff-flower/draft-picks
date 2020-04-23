@@ -25,9 +25,9 @@ export const AllPicksPage: React.FC<{}> = () => {
         <Table striped bordered variant="dark" responsive>
           <thead>
             <tr>
-              <td>Player</td>
+              <th>Player</th>
               {Array.from(new Array(32), (x, i) => i).map((val) => (
-                <td key={val}>{val + 1}</td>
+                <th key={val}>{val + 1}</th>
               ))}
             </tr>
           </thead>

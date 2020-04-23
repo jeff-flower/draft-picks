@@ -267,11 +267,13 @@ export const Firebase = {
     return picksSummary;
   },
   getAllTrades: async (): Promise<TradesSummary[]> => {
-    const userDocs = await app.firestore().collection('users').get();
-    const usernameMap = new Map();
-    userDocs.forEach((doc) => {
-      usernameMap.set(doc.id, doc.data()!.username);
-    });
+    const userMap = await (
+      await app.firestore().doc('users/users').get()
+    ).data()!;
+    const usernameMap = new Map<string, string>();
+    for (let [key, value] of Object.entries(userMap)) {
+      usernameMap.set(key, value.username);
+    }
 
     const tradesSummary: TradesSummary[] = [];
     const tradesDocs = await app
@@ -279,7 +281,7 @@ export const Firebase = {
       .collection(`2020/${process.env.REACT_APP_DB_TABLE}/trades`)
       .get();
     tradesDocs.forEach((tradesDoc) => {
-      const username = usernameMap.get(tradesDoc.id);
+      const username = usernameMap.get(tradesDoc.id) || '';
       if (tradesDoc.data() && tradesDoc.data().trades) {
         tradesSummary.push({ username, trades: tradesDoc.data().trades });
       }

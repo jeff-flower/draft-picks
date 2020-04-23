@@ -1,5 +1,3 @@
-import { User } from 'firebase';
-
 export type UserPick = { pickNumber: number; team: string; pick: string };
 
 const teamOrder = [
